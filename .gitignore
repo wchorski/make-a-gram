@@ -1,6 +1,9 @@
 # testing
 /coverage
 
+compose.yml
+docker-compose.yml
+
 # next.js
 /.next/
 /out/

@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+ # nginx built inside
+  app:
+    image: make-a-gram:latest
+    restart: unless-stopped
+    container_name: make-a-gram
+    build:
+      dockerfile: Dockerfile
+    # using Docker's DNS via nginx-prox-mgmt-3_default
+    ports:
+      - 8888:3000
+    environment:
+      - NEXT_PUBLIC_BRAND_NAME=
+      - NEXT_PUBLIC_UMAMI_ID=
+      - NEXT_PUBLIC_UMAMI_URL=
+
+    networks:
+      - make-a-gram-network
+      - nginx-prox-mgmt-3_default # add to ngnix-prox-mgmt network for Docker DNS
+
+networks:    
+  make-a-gram-network:
+    driver: bridge   
+  nginx-prox-mgmt-3_default: # so we can call service by DNS
+    driver: bridge

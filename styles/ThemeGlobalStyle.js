@@ -16,9 +16,6 @@ export const GlobalStyles = createGlobalStyle`
       margin-top: -65em;
       box-shadow: #00000080 3px 3px 19px;
 
-      /* .booth-pics{
-        border: solid 4px black;
-      } */
     }
 
 
@@ -117,9 +114,9 @@ export const GlobalStyles = createGlobalStyle`
 
   @media (prefers-color-scheme: dark){
     :root{
-      --c-1: #9b20da;
-      --c-2: #7f83ad;
-      --c-3: #1e142a; 
+      --c-1: #1aaa6b;
+      --c-2: #7fad9e;
+      --c-3: #152a14; 
 
       --c-nav: #141414;
       --c-dark: #ffffff;
@@ -134,7 +131,7 @@ export const GlobalStyles = createGlobalStyle`
       
       --c-bold: #ffffbd;
       --c-ital: rgb(179, 179, 179);
-      --c-h2: #a3a5bd;
+      --c-h2: #7fad9e;
     }
     html {
       color-scheme: dark;
@@ -142,9 +139,9 @@ export const GlobalStyles = createGlobalStyle`
   }
   @media (prefers-color-scheme: light){
     :root{
-      --c-1: #9b20da;
-      --c-2: #7f83ad;
-      --c-3: #1e142a;
+      --c-1: #1aaa6b;
+      --c-2: #7fad9e;
+      --c-3: #152a14;
 
       --c-nav: #575757;
       --c-dark: #ffffff;
@@ -323,8 +320,10 @@ export const GlobalStyles = createGlobalStyle`
 
   header{
     border-bottom: solid 2px var(--c-1);
+    box-shadow: #000000bd 3px 3px 9px;
     width: 100%;
     text-align: center;
+    margin-bottom: 1em;
   }
 
   .layout-wrap{
@@ -342,6 +341,9 @@ export const GlobalStyles = createGlobalStyle`
     footer{
       width: 100%;
       margin-top: 15em;
+      text-align: center;
+      background-color: var(--c-3);
+      padding: 2em 0;
     }
   }
 

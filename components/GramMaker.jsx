@@ -15,7 +15,7 @@ export const GramMaker = () => {
   const ref = useRef(null)
 
   const [bgColor, setBgColor] = useState('#303d71')
-  const [customImg, setcustomImg] = useState("center no-repeat url('vercel.svg')")
+  const [customImg, setcustomImg] = useState("center no-repeat url('')")
   const [fontColor, setfontColor] = useState('#ffffff')
   const [namesSize, setNamesSize] = useState('91px')
   const [dateSize, setDateSize] = useState('57px')
