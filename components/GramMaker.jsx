@@ -4,6 +4,7 @@ import { toJpeg, toPng } from 'html-to-image';
 
 import  localFont  from "@next/font/local";
 const baloo = localFont({src: '../public/fonts/Baloo2.ttf', weight: '400'})
+const blubber = localFont({src: '../public/fonts/BubblerOne-Regular.ttf'})
 const corinbold = localFont({src: '../public/fonts/Corinthia-Bold.ttf'})
 const courgette = localFont({src: '../public/fonts/Courgette-Regular.ttf'})
 const dancing = localFont({src: '../public/fonts/DancingScript-VariableFont_wght.ttf'})
@@ -14,14 +15,16 @@ export const GramMaker = () => {
   const ref = useRef(null)
 
   const [bgColor, setBgColor] = useState('#303d71')
+  const [customImg, setcustomImg] = useState("center no-repeat url('vercel.svg')")
   const [fontColor, setfontColor] = useState('#ffffff')
-  const [namesSize, setNamesSize] = useState('40px')
-  const [dateSize, setDateSize] = useState('30px')
+  const [namesSize, setNamesSize] = useState('91px')
+  const [dateSize, setDateSize] = useState('57px')
   const [names, setNames] = useState('Vince & Yancy')
   const [date, setDate] = useState('12 - 10 - 2029')
   const [shadow, setShadow] = useState('')
   const [fontFamNames, setfontFamNames] = useState(dancing.style.fontFamily)
-  const [fontFamDate, setfontFamDate] = useState(baloo.style.fontFamily)
+  const [fontFamDate, setfontFamDate] = useState(blubber.style.fontFamily)
+  const [isDoubled, setisDoubled] = useState(false)
 
   function setFontFam(val) {
 
@@ -34,6 +37,12 @@ export const GramMaker = () => {
 
       case 'courgette':
         return courgette.style.fontFamily
+
+      case 'dancing':
+        return dancing.style.fontFamily
+
+      case 'blubber':
+        return blubber.style.fontFamily
     
       default:
         break;
@@ -52,9 +61,8 @@ export const GramMaker = () => {
         break;
         
       case 'crisp':
-        setShadow('black 4px 8px 3px')
+        setShadow('#000000c9 4px 3px 3px')
         break;
-
     
       default:
         break;
@@ -62,54 +70,76 @@ export const GramMaker = () => {
 
   }
 
-  const  exportImg = useCallback(() => {
+  const delay = s => new Promise(res => setTimeout(res, s * 1000));
+
+  const  exportImg = async () => {
+
     if (ref.current === null) return
 
-    console.log('save image btn');
+    console.log();
 
-    var canv = document.getElementById('gramcanvas')
+    setisDoubled(true)
+    await delay(1);
 
-    // html2canvas(canv).then((canvas)=>{
-    //   var image = canvas.toDataURL('image/jpg', 1.0);
-    //   saveAs(image, 'new-image.jpg') 
-    // })
-    toPng(ref.current, { cacheBust: true, })
-      .then((dataUrl) => {
-        const link = document.createElement('a')
-        link.download = 'my-image-name.png'
-        link.href = dataUrl
-        link.click()
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [ref])
+    const dataUrl = await toJpeg(ref.current);
+ 
+    // download image
+    const link = document.createElement('a');
+    link.download = `footer--${date}--${names}.jpg`;
+    link.href = dataUrl;
+    link.click();
+
+    // await delay(8);
+    setisDoubled(false)
+  }
 
 
   return (<>
-    {/* <canvas id="myCanvas" width="200" height="100" style={{border: "1px solid #FFF"}}>
-      <h3>Ted & Shelly</h3>
-      <h4>12 - 10 - 2027</h4>
-      asdfasdfasdf
-    </canvas> */}
     <div className="makeagram">
 
-      <div ref={ref} id="gramcanvas" style={{border: "1px solid #FFF", backgroundColor: bgColor}}>
-        <h3 style={ {color: fontColor, fontSize: namesSize, textShadow: shadow, fontFamily: fontFamNames}}>{names}</h3>
-        <h4 style={{color: fontColor, fontSize: dateSize, textShadow: shadow, fontFamily: fontFamDate}}>{date}</h4>
+      <div className="strip-preview">
+        <h2>Photo Strip Preview </h2>
+        <ul className='booth-pics'>
+          <li>😀</li>
+          <li>😎</li>
+          <li>🤔</li>
+          <li>😁</li>
+        </ul>
+
+        <div className="gramcanvas" style={{backgroundColor: bgColor}}>
+          <div className="left" style={{background: customImg, backgroundSize: 'contain'}}>
+            <h3 style={ {color: fontColor, fontSize: namesSize, textShadow: shadow, fontFamily: fontFamNames}}>{names}</h3>
+            <h4 style={{color: fontColor, fontSize: dateSize, textShadow: shadow, fontFamily: fontFamDate}}>{date}</h4>
+          </div>
+        </div>
+      </div>
+
+      <div className="canvas-wrapper">
+        <div ref={ref} className="gramcanvas" style={{backgroundColor: bgColor}}>
+          <div className="left" style={{background: customImg, backgroundSize: 'contain'}}>
+            <h3 style={ {color: fontColor, fontSize: namesSize, textShadow: shadow, fontFamily: fontFamNames}}>{names}</h3>
+            <h4 style={{color: fontColor, fontSize: dateSize, textShadow: shadow, fontFamily: fontFamDate}}>{date}</h4>
+          </div>
+          {isDoubled && (
+            <div className="right" style={{background: customImg, backgroundSize: 'contain'}}>
+              <h3 style={ {color: fontColor, fontSize: namesSize, textShadow: shadow, fontFamily: fontFamNames}}>{names}</h3>
+              <h4 style={{color: fontColor, fontSize: dateSize, textShadow: shadow, fontFamily: fontFamDate}}>{date}</h4>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="editor">
-        <form>
 
+        <div className="form">
           <div className="form-item">
             <input type="text" className='text' placeholder={names} onChange={(e) => setNames(e.target.value)} /> 
-            <input type='range' min='25' max='100' defaultValue={namesSize} className='slider' onChange={(e) => setNamesSize(e.target.value + 'px')}/>
+            <input type='range' min='25' max='200' defaultValue={namesSize} className='slider' onChange={(e) => setNamesSize(e.target.value + 'px')}/>
           </div>
 
           <div className="form-item">
             <input type="text" className='text' placeholder={date} onChange={(e) => setDate(e.target.value)} /> 
-            <input type='range' min='20' max='100' defaultValue={dateSize} className='slider' onChange={(e) => setDateSize(e.target.value + 'px')}/>
+            <input type='range' min='20' max='200' defaultValue={dateSize} className='slider' onChange={(e) => setDateSize(e.target.value + 'px')}/>
           </div>
   
 
@@ -131,6 +161,7 @@ export const GramMaker = () => {
               <option value='corinbold'> corinbold</option>
               <option value='courgette'> courgette</option>
               <option value='dancing'> dancing </option>
+              <option value='blubber'> blubber </option>
             </select>
           </div>
           <div className="form-item select">
@@ -140,6 +171,7 @@ export const GramMaker = () => {
               <option value='corinbold'> corinbold</option>
               <option value='courgette'> courgette</option>
               <option value='dancing'> dancing </option>
+              <option value='blubber'> blubber </option>
             </select>
           </div>
 
@@ -159,15 +191,30 @@ export const GramMaker = () => {
             </lable>
           </div>
 
+          <hr />
 
-          <button onPointerUp={exportImg()}>Save Image</button>
+          <div className="form-item">
+            <h2>Custom Image</h2>
+            <input type="file" accept="image/*" onChange={(e) => setcustomImg(`center no-repeat url(${URL.createObjectURL(e.target.files[0])})`)} />
+          </div>
 
           
-        </form>
+
+          {!isDoubled && (
+            <button className='btn--Med' onClick={exportImg}>Save Image</button>
+          )}
+
+          {isDoubled && (
+            <p className='btn--Med' style={{backgroundColor: 'grey'}}>saving image...</p>
+          )}
+        </div>
+
       </div>
 
     </div>
-    <small>625px x 350px</small>
+    <small>monogram = 625px x 350px</small> 
+    <br />
+    <small>Strip = 4in x 6in</small>
 
     
   </>)

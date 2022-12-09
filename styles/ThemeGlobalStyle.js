@@ -7,19 +7,34 @@ export const GlobalStyles = createGlobalStyle`
 
   .makeagram{
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .strip-preview{
+      transform: scale(.5);
+      transform-origin: bottom;
+      margin-top: -65em;
+      box-shadow: #00000080 3px 3px 19px;
+
+      /* .booth-pics{
+        border: solid 4px black;
+      } */
+    }
 
 
     .editor{
-      border-left: solid 1px #ffffff5e;
+      border-left: double #4444445e 3px;
       margin-left: 1em;
       padding-left: 1em;
+      width: 20em;
 
-      form{
+      .form{
         display: flex;
         flex-direction: column;
 
         h2{
-          font-size: 25px;
+          font-size: 15px;
+          margin-bottom: 5px;
         }
 
         input{
@@ -51,37 +66,53 @@ export const GlobalStyles = createGlobalStyle`
       }
     }
 
-    #gramcanvas{
+    .booth-pics{
+      list-style: none;
       text-align: center;
+      margin: 0;
+      padding: 0;
+      
+      li{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 80px;
+        background-color: whitesmoke;
+        width: 625px;
+        height: 350px;
+        margin: 0;
+        padding: 0;
+        border-bottom: solid 2px darkgray;
+      }
+    }
+    .canvas-wrapper{
+      border: solid 2px darkgray;
+    }
+    .gramcanvas{
+      text-align: center;
+      /* border: solid 1px #FFF; */
       height: 350px;
-      width: 625px;
+      /* width: 625px; */
+      /* width: 1250px; */
       position: relative;
-      padding: 25px;
-
+      
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      
+      .left, .right{
+        /* border: solid 1px yellow; */
+        height: 350px;
+        width: 625px;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
 
       h4, h3{
         margin: 0;
       }
-
-      /* h3{
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-      h4{
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      } */
-  
     }
-
   }
 
   @media (prefers-color-scheme: dark){
@@ -198,26 +229,32 @@ export const GlobalStyles = createGlobalStyle`
     color: var(--c-1);
     transition: .3s;
     text-decoration: dotted;
-
-    &.btn--Med{
-      background-color: var(--c-1);
-      color: var(--c-dark);
-      display: block;
-      border: solid var(--c-1) 2px;
-      border-radius: 5px;
-      width: 7em;
-      padding: .2em;
-      margin-bottom: 1em;
-      text-align: center;
-      text-decoration: none;
-    }
   }
   a:hover{
     opacity: .7;
   }
 
-  button {
+  button, input {
     cursor: pointer;
+    transition: .3s;
+
+    &:hover{
+      opacity: .7;
+    }
+  }
+
+  .btn--Med{
+    background-color: var(--c-1);
+    color: var(--c-dark);
+    display: block;
+    border: solid var(--c-1) 2px;
+    border-radius: 5px;
+    /* width: 7em; */
+    padding: 2em;
+
+    margin: 1em 0;
+    text-align: center;
+    text-decoration: none;
   }
 
   button.theme{
@@ -282,6 +319,12 @@ export const GlobalStyles = createGlobalStyle`
     padding: 1em;
     margin: 1em 0;
     background-color: var(--color-bg);
+  }
+
+  header{
+    border-bottom: solid 2px var(--c-1);
+    width: 100%;
+    text-align: center;
   }
 
   .layout-wrap{
@@ -466,8 +509,4 @@ export const GlobalStyles = createGlobalStyle`
 
     }
   }
-
-
-
-
 `
